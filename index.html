@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Encuestas IDRA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-content">
+      <div class="brand">
+        <div class="brand-logo">IDRA</div>
+        <div>
+          <h1>Panel de estadísticas</h1>
+          <p>Seguimiento de participación en clases asincrónicas</p>
+        </div>
+      </div>
+
+      <div class="estado-api">
+        <span class="punto offline" id="puntoEstado"></span>
+        <span id="textoEstado">Conectando...</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="navegacion">
+    <div class="nav-container">
+      <button class="nav-btn active" data-page="pagina-general">
+        <span>⌂</span> General
+      </button>
+
+      <button class="nav-btn" data-page="pagina-psico">
+        <span>📚</span> Psicopedagogía
+      </button>
+
+      <button class="nav-btn" data-page="pagina-terapia">
+        <span>🤝</span> Acompañamiento
+      </button>
+
+      <button class="nav-btn" data-page="pagina-software">
+        <span>💻</span> Software
+      </button>
+
+      <button class="nav-btn" data-page="pagina-resultados">
+        <span>📊</span> Resultados
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-container">
+
+    <!-- GENERAL -->
+    <section class="page active" id="pagina-general">
+
+      <div class="page-heading">
+        <span class="eyebrow">PANEL GENERAL</span>
+        <h2>Resumen de participación</h2>
+        <p>Información general de las respuestas registradas.</p>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon blue">📋</div>
+          <p>Total de respuestas</p>
+          <h3 id="totalRespuestas">0</h3>
+          <span>Encuestas registradas</span>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon purple">🎓</div>
+          <p>Total de estudiantes</p>
+          <h3 id="totalEstudiantes">325</h3>
+          <span>Población total</span>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon green">📈</div>
+          <p>Participación general</p>
+          <h3 id="porcentajeGeneral">0%</h3>
+          <span>Sobre el total de estudiantes</span>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon orange">▶</div>
+          <p>Con clases asincrónicas</p>
+          <h3 id="totalSi">0</h3>
+          <span>Estudiantes que respondieron que sí</span>
+        </article>
+      </div>
+
+      <article class="panel progress-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="eyebrow">PARTICIPACIÓN</span>
+            <h3>Avance de la encuesta</h3>
+          </div>
+          <strong id="avanceGeneral">0%</strong>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="barraGeneral"></div>
+        </div>
+
+        <p class="muted">Porcentaje de respuestas sobre los 325 estudiantes.</p>
+      </article>
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">DISTRIBUCIÓN</span>
+          <h2>Participación por carrera</h2>
+        </div>
+      </div>
+
+      <div class="career-grid" id="tarjetasCarreras"></div>
+
+    </section>
+
+    <!-- PSICOPEDAGOGÍA -->
+    <section class="page" id="pagina-psico">
+      <div class="page-heading">
+        <span class="eyebrow">DETALLE POR CARRERA</span>
+        <h2>Tecnicatura Superior en Psicopedagogía</h2>
+        <p>Participación de los estudiantes según el año de cursada.</p>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon blue">📋</div>
+          <p>Respuestas registradas</p>
+          <h3 id="psicoRespuestas">0</h3>
+          <span>De 74 estudiantes</span>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon green">📈</div>
+          <p>Participación</p>
+          <h3 id="psicoPorcentaje">0%</h3>
+          <span>Sobre la población de la carrera</span>
+        </article>
+      </div>
+
+      <article class="panel">
+        <h3>Participación por año</h3>
+        <div id="psicoAnios" class="years-list"></div>
+      </article>
+    </section>
+
+    <!-- ACOMPAÑAMIENTO -->
+    <section class="page" id="pagina-terapia">
+      <div class="page-heading">
+        <span class="eyebrow">DETALLE POR CARRERA</span>
+        <h2>Acompañamiento Terapéutico</h2>
+        <p>Participación de los estudiantes según el año de cursada.</p>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon blue">📋</div>
+          <p>Respuestas registradas</p>
+          <h3 id="terapiaRespuestas">0</h3>
+          <span>De 182 estudiantes</span>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon green">📈</div>
+          <p>Participación</p>
+          <h3 id="terapiaPorcentaje">0%</h3>
+          <span>Sobre la población de la carrera</span>
+        </article>
+      </div>
+
+      <article class="panel">
+        <h3>Participación por año</h3>
+        <div id="terapiaAnios" class="years-list"></div>
+      </article>
+    </section>
+
+    <!-- SOFTWARE -->
+    <section class="page" id="pagina-software">
+      <div class="page-heading">
+        <span class="eyebrow">DETALLE POR CARRERA</span>
+        <h2>Tecnicatura en Desarrollo de Software</h2>
+        <p>Participación de los estudiantes según el año de cursada.</p>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon blue">📋</div>
+          <p>Respuestas registradas</p>
+          <h3 id="softwareRespuestas">0</h3>
+          <span>De 69 estudiantes</span>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-icon green">📈</div>
+          <p>Participación</p>
+          <h3 id="softwarePorcentaje">0%</h3>
+          <span>Sobre la población de la carrera</span>
+        </article>
+      </div>
+
+      <article class="panel">
+        <h3>Participación por año</h3>
+        <div id="softwareAnios" class="years-list"></div>
+      </article>
+    </section>
+
+    <!-- RESULTADOS DE LA ENCUESTA -->
+    <section class="page" id="pagina-resultados">
+
+      <div class="page-heading results-heading">
+        <span class="eyebrow">ANÁLISIS DE RESULTADOS</span>
+        <h2>Resultados de la encuesta</h2>
+        <p>Gráficos elaborados a partir de las respuestas registradas.</p>
+
+        <div class="results-total" id="resultadosTotal">
+          Cargando respuestas...
+        </div>
+
+        <p class="muted">Los porcentajes se calculan sobre las respuestas válidas de cada pregunta.</p>
+      </div>
+
+      <!-- 01 INFORMACIÓN GENERAL -->
+      <div class="results-section">
+        <div class="section-number">01</div>
+        <div class="results-section-content">
+          <span class="eyebrow">INFORMACIÓN GENERAL</span>
+          <h2>Características de los encuestados</h2>
+
+          <div class="charts-grid">
+            <article class="chart-card">
+              <h3>Respuestas por carrera</h3>
+              <p>Distribución de participantes según su carrera.</p>
+              <div class="chart-container">
+                <canvas id="graficoCarreras"></canvas>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Disponibilidad de clases asincrónicas</h3>
+              <p>¿Tenés clases asincrónicas en tu carrera o curso?</p>
+              <div class="chart-container">
+                <canvas id="graficoAsincronicas"></canvas>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 EXPERIENCIA -->
+      <div class="results-section">
+        <div class="section-number">02</div>
+        <div class="results-section-content">
+          <span class="eyebrow">EXPERIENCIA</span>
+          <h2>Estudiantes que tienen clases asincrónicas</h2>
+
+          <div class="charts-grid">
+            <article class="chart-card">
+              <h3>Nivel de conformidad</h3>
+              <p>¿Qué tan conforme estás con la modalidad asincrónica?</p>
+              <div class="chart-container">
+                <canvas id="graficoConformidad"></canvas>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Percepción del aprendizaje</h3>
+              <p>¿Cómo considerás que es tu aprendizaje con esta modalidad?</p>
+              <div class="chart-container">
+                <canvas id="graficoAprendizaje"></canvas>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Materiales de estudio</h3>
+              <p>¿Los materiales disponibles son suficientes para aprender?</p>
+              <div class="chart-container">
+                <canvas id="graficoMateriales"></canvas>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Acompañamiento docente</h3>
+              <p>¿Sentís que tenés acompañamiento del profesor?</p>
+              <div class="chart-container">
+                <canvas id="graficoAcompanamiento"></canvas>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 OPINIONES Y DIFICULTADES -->
+      <div class="results-section">
+        <div class="section-number">03</div>
+        <div class="results-section-content">
+          <span class="eyebrow">OPINIONES Y DIFICULTADES</span>
+          <h2>Aspectos destacados por los estudiantes</h2>
+
+          <div class="lists-grid">
+            <article class="chart-card">
+              <h3>Principales dificultades</h3>
+              <p>¿Qué te cuesta más al estudiar de manera asincrónica?</p>
+              <div id="listaDificultades" class="answers-list"></div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Qué es lo que más les gusta</h3>
+              <p>Aspectos positivos de las clases asincrónicas.</p>
+              <div id="listaGusta" class="answers-list"></div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Aspectos que se podrían mejorar</h3>
+              <p>Opiniones sobre los puntos que necesitan mejoras.</p>
+              <div id="listaMejorar" class="answers-list"></div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Motivos de preferencia</h3>
+              <p>Razones por las que eligen una modalidad.</p>
+              <div id="listaPorque" class="answers-list"></div>
+            </article>
+          </div>
+
+          <div class="charts-grid">
+            <article class="chart-card">
+              <h3>Modalidad preferida</h3>
+              <p>¿Qué modalidad preferís para estudiar?</p>
+              <div class="chart-container">
+                <canvas id="graficoModalidad"></canvas>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <h3>¿Quieren más materias asincrónicas?</h3>
+              <p>Opinión de quienes ya tienen experiencia con esta modalidad.</p>
+              <div class="chart-container">
+                <canvas id="graficoMasMaterias"></canvas>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 SIN CLASES ASINCRÓNICAS -->
+      <div class="results-section">
+        <div class="section-number">04</div>
+        <div class="results-section-content">
+          <span class="eyebrow">ESTUDIANTES SIN CLASES ASINCRÓNICAS</span>
+          <h2>Opiniones de quienes no tienen esta modalidad</h2>
+
+          <div class="charts-grid">
+            <article class="chart-card">
+              <h3>Motivos por los que no tienen clases asincrónicas</h3>
+              <p>Razones indicadas por los encuestados.</p>
+              <div class="chart-container">
+                <canvas id="graficoMotivoNo"></canvas>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Interés en incorporar clases asincrónicas</h3>
+              <p>¿Te gustaría tener clases asincrónicas?</p>
+              <div class="chart-container">
+                <canvas id="graficoDeseo"></canvas>
+              </div>
+            </article>
+
+            <article class="chart-card">
+              <h3>Uso de videos o materiales grabados</h3>
+              <p>¿Usás videos o materiales grabados para estudiar?</p>
+              <div class="chart-container">
+                <canvas id="graficoVideos"></canvas>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 INTERPRETACIÓN -->
+      <div class="results-section">
+        <div class="section-number">05</div>
+        <div class="results-section-content">
+          <span class="eyebrow">INTERPRETACIÓN</span>
+          <h2>Conclusiones generales</h2>
+          <p class="muted">Síntesis elaborada a partir de las respuestas disponibles.</p>
+
+          <!-- REFLEXIÓN DEL PROYECTO -->
+          <article class="reflection-card">
+            <div class="reflection-header">
+              <span class="reflection-icon">💭</span>
+              <div>
+                <span class="eyebrow">REFLEXIÓN DEL PROYECTO</span>
+                <h3>Conclusion sobre la modalidad asincrónica</h3>
+              </div>
+            </div>
+
+            <div class="reflection-content">
+              <p>
+                A través de esta investigación buscamos comprender cómo viven los estudiantes la modalidad de clases asincrónicas y qué lugar ocupa en su formación académica. Para eso, tuvimos en cuenta las experiencias de distintas carreras y años de cursada, considerando que cada estudiante puede tener necesidades y formas de organizarse diferentes.
+              </p>
+
+              <p>
+                Nos interesó conocer tanto sus beneficios, como la flexibilidad para manejar los horarios y estudiar a su propio ritmo, como también las dificultades que pueden aparecer, por ejemplo, la falta de concentración, la organización del tiempo o la necesidad de contar con un mayor acompañamiento docente.
+              </p>
+
+              <p>
+                Consideramos que las clases asincrónicas pueden ser una herramienta muy útil dentro de la educación, siempre que estén bien organizadas y acompañadas por los docentes. Por eso, creemos que escuchar las opiniones de los estudiantes es fundamental para comprender qué aspectos funcionan, cuáles necesitan mejorar y cómo se podría lograr una experiencia de aprendizaje más completa.
+              </p>
+            </div>
+          </article>
+
+          <!-- CONCLUSIONES AUTOMÁTICAS -->
+          <article class="conclusions-card">
+            <div id="conclusiones">
+              <p class="empty-message">Esperando los resultados de la encuesta...</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Dashboard de encuestas · IDRA</p>
+    <p>Última actualización: <span id="ultimaActualizacion">Pendiente</span></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
